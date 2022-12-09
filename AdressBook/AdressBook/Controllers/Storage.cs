@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace AdressBook.Controllers
 {
-    public class HomeController : Controller
+    public class Storage : Controller
     {
         public IActionResult Index()
         {
@@ -13,6 +13,7 @@ namespace AdressBook.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
         }
     }
 }
