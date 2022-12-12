@@ -54,7 +54,7 @@ namespace AdressBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Adress")] Workplace workplace)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Adress,Password")] Workplace workplace)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace AdressBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Adress")] Workplace workplace)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Adress,Password")] Workplace workplace)
         {
             if (id != workplace.Id)
             {

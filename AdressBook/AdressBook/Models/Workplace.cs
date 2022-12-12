@@ -13,9 +13,12 @@ namespace AdressBook.Models
         public string Name { get; set; }
 
         [Display(Name = "Описание")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Display(Name = "Адрес")]
         public string Adress { get; set; }
+
+        [Display(Name = "Пароль")]
+        public string Password { get; set; }
     }
 }
