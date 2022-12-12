@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using AdressBook.Models;
 using AdressBook.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AdressBookContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AdressBookContext") ?? throw new InvalidOperationException("Connection string 'AdressBookContext' not found.")));
@@ -9,6 +11,13 @@ builder.Services.AddDbContext<AdressBookContext>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
