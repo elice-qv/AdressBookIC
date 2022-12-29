@@ -9,6 +9,14 @@
 <p>
     <a asp-action="Create">Добавить адрес</a>
 </p>
+
+<form asp-controller="Workplaces" asp-action="Index" method="get">
+    <p>
+        Имя устройства: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>

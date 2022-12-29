@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AdressBook.Data;
 using AdressBook.Models;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
 
 namespace AdressBook.Controllers
 {
@@ -19,10 +20,17 @@ namespace AdressBook.Controllers
             _context = context;
         }
 
-        // GET: Workplaces
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-              return View(await _context.Workplace.ToListAsync());
+            var workplaces = from m in _context.Workplace
+                             select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                workplaces = workplaces.Where(s => s.Name!.Contains(searchString));
+            }
+
+            return View(await workplaces.ToListAsync());
         }
 
         // GET: Workplaces/Details/5

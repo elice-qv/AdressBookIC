@@ -25,10 +25,7 @@ namespace AdressBook.Models
                 context.Workplace.AddRange(
                     new Workplace
                     {
-                        Id = 1,
-                        Name = "test111",
-                        Description = "Def pass",
-                        Adress = "123.123.123.123"
+                        
                     }
                 );
                 context.SaveChanges();
