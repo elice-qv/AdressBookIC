@@ -8,9 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using AdressBook.Data;
 using AdressBook.Models;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
+using Microsoft.AspNetCore.Authorization;
+using NuGet.Protocol;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace AdressBook.Controllers
 {
+    [Authorize]
     public class WorkplacesController : Controller
     {
         private readonly AdressBookContext _context;
@@ -32,6 +37,39 @@ namespace AdressBook.Controllers
 
             return View(await workplaces.ToListAsync());
         }
+
+        //Login
+
+        [AllowAnonymous]
+        public IActionResult Login(string returnUrl)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var claims = new List<Claim>
+            {
+                new Claim("Demo","Value")
+            };
+            var claimIdentity = new ClaimsIdentity(claims, "Cookie");
+            var claimPrincipal = new ClaimsPrincipal(claimIdentity);
+            await HttpContext.SignInAsync("Cookie", claimPrincipal);
+
+            return Redirect(model.ReturnUrl);
+        }
+        public IActionResult LogOff()
+        {
+            HttpContext.SignOutAsync("Cookie");
+            return Redirect("/AdressBook/Index");
+        }
+
 
         // GET: Workplaces/Details/5
         public async Task<IActionResult> Details(int? id)

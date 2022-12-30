@@ -1,13 +1,19 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using AdressBook.Models;
 using AdressBook.Data;
+using AdressBook.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AdressBookContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AdressBookContext") ?? throw new InvalidOperationException("Connection string 'AdressBookContext' not found.")));
 
 // Add services to the container.
+builder.Services.AddAuthentication("Cookie")
+    .AddCookie("Cookie", config =>
+    {
+        config.LoginPath = "/Workplaces/Login";
+    });
+builder.Services.AddAuthorization();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -31,6 +37,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
